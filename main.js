@@ -4,7 +4,7 @@ $(document).ready(function(){
 // console.log(data)
 // })
 
-$.getJSON('http://localhost:3000/chirps',function(data){
+$.getJSON('http://arcane-shore-86443.herokuapp.com/chirps',function(data){
   displayData(data)
 })
 
@@ -14,14 +14,13 @@ $.getJSON('http://localhost:3000/chirps',function(data){
     $.each(arr, function(i, user){
 
       username = user.username
-      time = user.chirptime
+      time = moment(user.chirptime).format('MMMM Do YYYY @ h:mma')
       pic = user.userpic
       body = user.body
 
       source = $("#chirp").html();
       template = Handlebars.compile(source);
       context = {userimage: pic, name: username, createdAt: time, body: body};
-      console.log(context)
       html = template(context);
       $('#index').append(html)
     })
