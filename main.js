@@ -1,9 +1,5 @@
 $(document).ready(function() {
 
-    // $.getJSON('http://localhost:3000/chirps',function(data){
-    // console.log(data)
-    // })
-
     $.getJSON('https://arcane-shore-86443.herokuapp.com/chirps', function(data) {
         displayData(data)
     })
@@ -36,7 +32,7 @@ $(document).ready(function() {
     function fetchUserProfile(url) {
         $.getJSON(url, function(obj) {
             $("#profilemodal .modal-title").text(obj.name)
-            $("#profilemodal .modal-body").html("<img src=\"" + obj.userpic + "\" class=\"img-responsive img-rounded center-block\" id=\"userpic\"><p>" + obj.name + " has been a member of Chirpy since " + obj.created_at + "</p><p>Chirp count:" + obj.chirp_count + "</p><p>Followers:" + obj.followers_count + "</p><p>Following:" + obj.followees_count + "</p>")
+            $("#profilemodal .modal-body").html("<img src=\"" + obj.userpic + "\" class=\"img-responsive img-rounded center-block\" id=\"userpic\"><p>" + obj.name + " has been a member of Chirpy since " + moment(obj.created_at).format('MMMM Do YYYY') + "</p><p>Chirp count: " + obj.chirp_count + "</p><p>Followers: " + obj.followers_count + "</p><p>Following: " + obj.followees_count + "</p>")
         })
     }
 
