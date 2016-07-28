@@ -9,11 +9,11 @@ $(document).ready(function() {
     function displayData(arr) {
         $.each(arr, function(i, user) {
 
-            username = user.username
-            time = moment(user.chirptime).format('MMMM Do YYYY @ h:mma')
-            pic = user.userpic
-            body = user.body
-            profile = user.userpage
+            var username = user.username
+            var time = moment(user.chirptime).format('MMMM Do YYYY @ h:mma')
+            var pic = user.userpic
+            var body = user.body
+            var profile = user.userpage
 
             source = $("#chirp").html();
             template = Handlebars.compile(source);
@@ -31,15 +31,16 @@ $(document).ready(function() {
 
     function fetchUserProfile(url) {
         $.getJSON(url, function(obj) {
+            var html = modelTemplate(obj)
             $("#profilemodal .modal-title").text(obj.name)
-            $("#profilemodal .modal-body").html("<img src=\"" + obj.userpic + "\" class=\"img-responsive img-rounded center-block\" id=\"userpic\"><p>" + obj.name + " has been a member of Chirpy since " + moment(obj.created_at).format('MMMM Do YYYY') + "</p><p>Chirp count: " + obj.chirp_count + "</p><p>Followers: " + obj.followers_count + "</p><p>Following: " + obj.followees_count + "</p>")
+            $("#profilemodal .modal-body").html(html)
         })
     }
 
     function modelTemplate(obj) {
-        source = $("#modaltemplate").html();
-        template = Handlebars.compile(source);
-        context = {
+        var source = $("#modaltemplate").html();
+        var template = Handlebars.compile(source);
+        var context = {
             userimage: obj.userpic,
             name: obj.name,
             joined: obj.created_at,
@@ -47,8 +48,9 @@ $(document).ready(function() {
             followers: obj.followers_count,
             following: obj.followees_count
         };
-        html = template(context);
+        var html = template(context);
 
+        return html
     }
 
     $(document.body).on('show.bs.modal', function(ev) {
@@ -56,10 +58,5 @@ $(document).ready(function() {
         fetchUserProfile(ev.relatedTarget.href)
     })
 
-    $(".modal").on("hidden.bs.modal", function() {
-        $(".modal-body1").html("")
-        $(".modal-title").html("")
-
-    })
 
 })
